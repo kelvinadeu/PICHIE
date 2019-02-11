@@ -1,7 +1,9 @@
-from flask_sqlalchemy import SQLALCHEMY
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
 
 bootstrap = Bootstrap()
-db = SQLALCHEMY()
+db = SQLAlchemy()
 
 def create_app(config_name):
     app = Flask(__name__)
@@ -9,3 +11,4 @@ def create_app(config_name):
     #Initializingflaskextensions
     bootstrap.init_app(app)
     db.init_app(app)
+    return app
