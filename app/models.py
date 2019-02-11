@@ -49,9 +49,9 @@ class Role(db.Model):
     # users = db.relationship('User',backref = 'role',lazy="dynamic")
 
 
-class Blog(db.Model):
-    blog_list=[]
-    __tablename__ = 'blogs'
+class Pitch(db.Model):
+    Pitch_list=[]
+    __tablename__ = 'pitch'
 
     id = db.Column(db.Integer,primary_key = True)
     post = db.Column(db.String(255), index = True)
