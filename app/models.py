@@ -49,16 +49,16 @@ class Role(db.Model):
     # users = db.relationship('User',backref = 'role',lazy="dynamic")
 
 
-class pitchieieie(db.Model):
-    pitchieieie_list=[]
-    __tablename__ = 'pitchieieie'
+class Pitchies(db.Model):
+    Pitchies_list=[]
+    __tablename__ = 'pitchies'
 
     id = db.Column(db.Integer,primary_key = True)
     post = db.Column(db.String(255), index = True)
     title = db.Column(db.String(255),index = True)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    # category_id = db.Column(db.Integer,db.ForeignKey('categories.id'))
+    #category_id = db.Column(db.Integer,db.ForeignKey('categories.id'))
     comments = db.relationship('Comment', backref = 'pitchie', lazy = 'dynamic')
 
     def __init__(self,title,post,user):
@@ -68,18 +68,18 @@ class pitchieieie(db.Model):
 
     def save_pitchie(self):
         '''
-        Function that saves all pitchies posted
+        Function that saves all pitchie posted
         '''
         db.session.add(self)
         db.session.commit()
 
     @classmethod
-    def get_all_pitchies(cls):
+    def get_all_pitchie(cls):
         '''
         Function that queries database and returns all posted pitchies.
         '''
-        pitchies = pitchie.query.all()
-        return pitchies
+        pitchie = Pitchie.query.all()
+        return pitchie
 
     @classmethod
     def delete_all_pitchies(cls):
