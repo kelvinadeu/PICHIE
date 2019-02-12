@@ -19,4 +19,4 @@ class UserModelTest(unittest.TestCase):
         '''
         test to check if password is being hashed
         '''
-        self.assertTrue(self.new_user.password_0713730881 is not None)
+        self.assertTrue(self.new_user.password_hash is not None)

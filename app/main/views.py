@@ -71,7 +71,7 @@ def view_comments(pitchie_id):
     title = "Comments"
     comments = pitchie.get_pitchie_comments()
 
-    return render_template("view_comments.html", comments = comments,pitchieieieieie = pitchieieieieie,title = title)
+    return render_template("view_comments.html", comments = comments,pitchie = pitchie,title = title)
 
 @main.route("/profile/<user_id>")
 @login_required
