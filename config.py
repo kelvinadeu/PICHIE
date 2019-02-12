@@ -14,13 +14,16 @@ class Config:
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD  = os.environ.get("MAIL_PASSWORD")
 
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringaschool:0713730881@localhost/pitchies'
+
+
 class DevConfig(Config):
     """
     This is the class which we will use to set the configurations during development stage of the app
     Args:
         Config - this is the parent config class from which we inherit its properties
     """
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://Adeu:kelvinadeu25@localhost/pitchieieieie'
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://moringaschool:0713730881@localhost/pitchies'
 
     DEBUG = True
 
@@ -31,7 +34,7 @@ class ProdConfig(Config):
     Args:
         Config - this is the parent config class from which we inherit its properties
     """
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    #SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
 class TestConfig(Config):
     """
@@ -40,7 +43,7 @@ class TestConfig(Config):
         Config - this is the parent config class from which we inherit its properties
     """
 
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://Adeu:kelvinadeu25@localhost/test1'
+    #SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://Adeu:kelvinadeu25@localhost/test1'
 
 
 config_options = {
