@@ -1,0 +1,38 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<div class="container">
+  <div class="thumbnail">
+    <p class="others">Other comments:</p>
+    <ol>
+      {% for item in comments %}
+      <li>
+        <p class="comment"><b>{{item.comment}}</b></p>
+        <p class="usernames">Comment by: {{item.username}}</p>
+      </li>
+      {% endfor %}
+  </div>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Nunito+Sans');
+
+    .others {
+      font-size: 25px;
+      font-family: 'Nunito', sans-serif !important;
+      color: black;
+    }
+
+    .usernames {
+      font-size: 15px;
+      font-family: 'Nunito', sans-serif !important;
+      color: black;
+    }
+
+    .comment {
+      font-size: 18px;
+      font-family: 'Nunito', sans-serif !important;
+      color: solid black !important;
+    }
+  </style>
+  {% endblock %}

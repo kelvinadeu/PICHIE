@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf%}
+<!-- Content block -->
+{% block content %}
+<br>
+<br>
+<title> {{ title }} </title>
+
+<div class="container">
+  <br>
+  <br>
+  <br>
+  <br>
+  <div class="well">
+    <div class="row">
+
+      <div class="col-md-2 col-lg-2">
+
+      </div>
+
+      <div class=" col-xs-12 col-sm-12 col-md-8 col-lg-8 create-comment">
+
+        {{ wtf.quick_form(comment_form) }}
+
+      </div>
+
+      <div class="col-md-2 col-lg-2">
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<style>
+  body {
+    background: url(/static/photos/wall.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+{% endblock %}

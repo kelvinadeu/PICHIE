@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+<body>
+  <div class="container">
+    <div class="well">
+      <div class="col-md-2"></div>
+
+      <div class="col-md-8">
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="well">
+          {{ wtf.quick_form(blog_form) }}
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+
+  </div>
+</body>
+<style>
+  .well {
+    font-size: 15px;
+  }
+
+  body {
+    background: url(/static/photos/wall.jpg);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+</style>
+{% endblock %}
