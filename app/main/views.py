@@ -1,5 +1,5 @@
-from ..models import User,pitchie,Comment
-from .forms import AddpitchieieieieieForm,AddComment,EditBio
+from ..models import User,Pitchies,Comment
+from .forms import AddpitchieieForm,AddComment,EditBio
 from . import main
 from flask import render_template,redirect,url_for,flash,request,abort
 from flask_login import login_required
@@ -8,11 +8,15 @@ from .. import photos,db
 
 @main.route("/")
 def index():
-    pitchies = pitchies.query.all()
+    try:
+        pitchies = Pitchies.query.all()
+        print(pitchies)
+    except:
+        pitchies = 'none'
     title = "Home"
-    return render_template("index.html", pitchie = pitchie,title = title)
+    return render_template("index.html", pitchies = pitchies,title = title)
 
-@main.route("/pitchieieieieiee/<category>")
+@main.route("/pitchie/<category>")
 def categories(category):
     pitchies = None
     if category == "all":
@@ -24,9 +28,9 @@ def categories(category):
 
 @main.route("/<uname>/add/pitchie", methods = ["GET","POST"])
 @login_required
-def add_pitchie(uname):
+def add_pitchie(username):
     form = AddpitchieForm()
-    user = User.query.filter_by(name = uname).first()
+    user = User.query.filter_by(name = username).first()
     if user is None:
         abort(404)
     title = "Add pitchie"
@@ -59,7 +63,7 @@ def comment(user,pitchie_id):
         time = time[0:5]
         date = str(dateOriginal)
         date = date[0:10]
-        new_comment = Comment(content = content, user = user, pitchieieieieie = pitchieieieieie,time = time, date = date )
+        new_comment = Comment(content = content, user = user, pitchie = pitchie,time = time, date = date )
         new_comment.save_comment()
         return redirect(url_for("main.view_comments", pitchie_id=pitchie.id))
     return render_template("comment.html", title = pitchie.title,form = form,pitchie = pitchie)
