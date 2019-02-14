@@ -10,26 +10,23 @@ def load_user(user_id):
 
 
 class User(UserMixin,db.Model):
-    """
-    THis is the class which we will use to create the users for the app
-    """
     __tablename__ = 'users'
 
     id = db.Column(db.Integer,primary_key = True)
     username = db.Column(db.String(255),index = True)
     name = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),unique = True,index = True)
+    # pass_secure = db.Column(db.String(255))
     password_hash = db.Column(db.String(255))
     bio = db.Column(db.String(255))
     profile_pic_path = db.Column(db.String())
-    the_pitchies = db.relationship('Pitchies', backref='user', lazy='dynamic')
-    role = db.relationship('Role', backref='user', lazy='dynamic')
+    the_blog = db.relationship('Blog', backref='user', lazy='dynamic')
 
-
+    # comment = db.relationship('Comment', backref = 'user', lazy = 'dynamic')
 
     @property
     def password(self):
-         raise AttributeError('You cannot see the password attribute')
+         raise AttributeError('You cannot read the password attribute')
 
     @password.setter
     def password(self, password):
@@ -47,20 +44,20 @@ class Role(db.Model):
 
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255))
-    user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
+    # users = db.relationship('User',backref = 'role',lazy="dynamic")
 
 
 class Pitchies(db.Model):
-    Pitchies_list=[]
-    __tablename__ = 'pitchies'
+    blog_list=[]
+    __tablename__ = 'pichies'
 
     id = db.Column(db.Integer,primary_key = True)
     post = db.Column(db.String(255), index = True)
     title = db.Column(db.String(255),index = True)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
     user_id = db.Column(db.Integer,db.ForeignKey('users.id'))
-    category_id = db.Column(db.Integer,db.ForeignKey('categories.id'))
-    comments = db.relationship('Comment', backref = 'pitchie', lazy = 'dynamic')
+    # category_id = db.Column(db.Integer,db.ForeignKey('categories.id'))
+    comments = db.relationship('Comment', backref = 'pitchies', lazy = 'dynamic')
 
     def __init__(self,title,post,user):
         self.user = user
@@ -69,7 +66,7 @@ class Pitchies(db.Model):
 
     def save_pitchies(self):
         '''
-        Function that saves all pitchie posted
+        Function that saves all pitchies posted
         '''
         db.session.add(self)
         db.session.commit()
@@ -79,16 +76,16 @@ class Pitchies(db.Model):
         '''
         Function that queries database and returns all posted pitchies.
         '''
-        pitchie = Pitchie.query.all()
-        return pitchie
+        pitchies = Pitchies.query.all()
+        return pitchies
 
     @classmethod
     def delete_all_pitchies(cls):
-        pitchie.all_pitchies.delete()
+        Pitchie.all_pitchies.delete()
 
 class Category(db.Model):
     '''
-    Function that will define all the different categories of pitchies.
+    Function that will define all the different categories of blogs.
     '''
     __tablename__ ='categories'
 
@@ -96,7 +93,6 @@ class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category_name = db.Column(db.String(255))
     category_description = db.Column(db.String(255))
-    pitch = db.relationship('Pitchies', backref = 'pitchie', lazy = 'dynamic')
 
     @classmethod
     def get_categories(cls):
@@ -114,15 +110,15 @@ class Comment(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255),index = True)
     email = db.Column(db.String(255),index = True)
-    pitchie_id = db.Column(db.Integer,db.ForeignKey('pitchies.id'))
+    blog_id = db.Column(db.Integer,db.ForeignKey('blogs.id'))
     commenter_id = db.Column(db.Integer,db.ForeignKey('users.id'))
     comment_itself=db.Column(db.String(255),index = True)
     posted = db.Column(db.DateTime,default=datetime.utcnow)
 
-    def __init__(self,name,comment_itself,pitchie):
+    def __init__(self,name,comment_itself,blog):
         self.name = name
         self.comment_itself = comment_itself
-        self.pitchie = pitchie
+        self.blog = blog
 
     def save_comment(self):
         db.session.add(self)
@@ -136,7 +132,7 @@ class Comment(db.Model):
 
     @classmethod
     def delete_all_pitchies(cls):
-        pitchie.all_pitchies.delete()
+        Pitchie.all_pitchies.delete()
 
 
 class Subscribe(db.Model):

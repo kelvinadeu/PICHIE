@@ -1,4 +1,4 @@
-from ..models import User,Pitchies,Comment
+from ..models import User,Comment
 from .forms import AddpitchieieForm,AddComment,EditBio
 from . import main
 from flask import render_template,redirect,url_for,flash,request,abort
@@ -22,7 +22,7 @@ def categories(category):
     if category == "all":
         pitchies = pitchie.query.order_by(pitchie.time.desc())
     else:
-        pitchies = pitchieieie.query.filter_by(category = category).order_by(pitchie.time.desc()).all()
+        pitchies = pitchie.query.filter_by(category = category).order_by(pitchie.time.desc()).all()
 
     return render_template("pitchies.html", pitchies = pitchies, title = category.upper())
 
@@ -47,7 +47,7 @@ def add_pitchie(username):
         new_pitchie.save_pitchie()
         pitchies = pitchie.query.all()
         return redirect(url_for("main.categories",category = category))
-    return render_template("add_pitchie.html",form = form, title = title)
+    return render_template("new_pitchie.html",form = form, title = title)
 
 @main.route("/<user>/pitchie/<pitchie_id>/add/comment", methods = ["GET","POST"])
 @login_required
@@ -77,44 +77,44 @@ def view_comments(pitchie_id):
 
     return render_template("view_comments.html", comments = comments,pitchie = pitchie,title = title)
 
-@main.route("/profile/<user_id>")
+@main.route("/profile/<username>")
 @login_required
-def profile(user_id):
-    user = User.query.filter_by(id = user_id).first()
-    pitchies = pitchie.query.filter_by(user_id = user.id).order_by(pitchie.time.desc())
+def profile(username):
+    user = User.query.filter_by(username = username).first()
+    pitchies = Pitchie.query.filter_by(username = username).order_by(pitchie.time.desc())
     title = user.name.upper()
     return render_template("profile.html", pitchies = pitchies, user = user,title = title)
 
-@main.route("/<user_id>/profile")
-def user(user_id):
-    user = User.query.filter_by(id = user_id).first()
-    pitchies = pitchie.query.filter_by(user_id = user.id).order_by(pitchie.time.desc())
+@main.route("/<username>/profile")
+def user(username):
+    user = User.query.filter_by(id = username).first()
+    pitchies = pitchie.query.filter_by(username = username).order_by(pitchie.time.desc())
 
     title = user.name.upper()
-    return render_template("user.html", pitchiees = pitchies, user = user,title = title)
+    return render_template("user.html", pitchies = pitchies, user = user,title = title)
 
-@main.route("/pic/<user_id>/update", methods = ["POST"])
+@main.route("/pic/<username>/update", methods = ["POST"])
 @login_required
-def update_pic(user_id):
-    user = User.query.filter_by(id = user_id).first()
+def update_pic(username):
+    user = User.query.filter_by(id = username).first()
     title = "Edit Profile"
     if "profile-pic" in request.files:
         pic = photos.save(request.files["profile-pic"])
         file_path = f"photos/{pic}"
         user.profile_pic = file_path
         db.session.commit()
-    return redirect(url_for("main.profile", user_id = user.id))
+    return redirect(url_for("main.profile", username = username))
 
-@main.route("/<user_id>/profile/edit",methods = ["GET","POST"])
+@main.route("/<username>/profile/edit",methods = ["GET","POST"])
 @login_required
-def update_profile(user_id):
+def update_profile(username):
     title = "Edit Profile"
-    user = User.query.filter_by(id = user_id).first()
+    user = User.query.filter_by(id = username).first()
     form = EditBio()
 
     if form.validate_on_submit():
         bio = form.bio.data
         user.bio = bio
         db.session.commit()
-        return redirect(url_for('main.profile',user_id = user.id))
+        return redirect(url_for('main.profile',username = username))
     return render_template("update_profile.html",form = form,title = title)
