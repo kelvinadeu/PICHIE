@@ -32,8 +32,7 @@ $ sudo apt-get install python3.6.
 
 # Installation
 #### To access this application on your command line, you need to clone it git clone
-   https://kevnews-highlight.herokuapp.com/
-
+  
 #### License
 MIT License
 
