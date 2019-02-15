@@ -1,8 +1,8 @@
-<!--display blog in macros-->
-{% macro displayBlog(blog_list) %}
-    {% for blog in blog_list %}
-        <h3 class="title"><a href="/blog/{{blog.id}}">{{blog.title}}</a></h3>
-        <p class="posted">Posted on: <b>{{blog.posted}}</b></p>
+<!--display pitchie in macros-->
+{% macro displaypitchie(pitchie_list) %}
+    {% for pitchie in pitchie_list %}
+        <h3 class="title"><a href="/pitchie/{{pitchie.id}}">{{pitchie.title}}</a></h3>
+        <p class="posted">Posted on: <b>{{pitchie.posted}}</b></p>
         <hr>
     {% endfor %}
     <style>
@@ -21,7 +21,7 @@
 <div class="row col-lg-4">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <p class="writerr">Blog Writer: <i>{{ comment.name }}</i></p>
+            <p class="writerr">pitchie Writer: <i>{{ comment.name }}</i></p>
         </div>
         <div class="panel-body">
             <p class="comment">{{ comment.comment_itself}}</p>
