@@ -8,6 +8,8 @@
 
 # Technologies used
 ####  python3
+####  postgresql
+####  psycopg2
 ####  terminal
 ####  Github
 ####  heroku
