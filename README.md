@@ -32,7 +32,7 @@ $ sudo apt-get install python3.6.
 
 # Installation
 #### To access this application on your command line, you need to clone it git clone
-  
+  https://adeu-pitcher.herokuapp.com/
 #### License
 MIT License
 
